@@ -11,3 +11,4 @@ add_executable(IndirectList Version2/DataStructureBasic/IndirectList/IndirectLis
 add_executable(StackAndHeap Version2/StackAndHeap/Stack.h Version2/StackAndHeap/Stack.cpp Version2/StackAndHeap/LinkedStack.h Version2/StackAndHeap/LinkedStack.cpp Version2/StackAndHeap/Node.cpp Version2/StackAndHeap/Node.h)
 add_executable(Queue Version2/Queue/Queue.cpp Version2/Queue/Queue.h Version2/Queue/LinkedQueue.cpp Version2/Queue/LinkedQueue.h Version2/Queue/Node.cpp Version2/Queue/Node.h)
 add_executable(BinaryTree Version2/BinaryTree/BinaryTree.cpp Version2/BinaryTree/BinaryTreeNode.cpp Version2/BinaryTree/BinaryTreeNode.h Version2/BinaryTree/Demo.cpp Version2/BinaryTree/BinaryTree.h)
+add_executable(PriorityQueue Version2/PriorityQueue/MaxHeap.h Version2/PriorityQueue/MaxHeap.cpp)
