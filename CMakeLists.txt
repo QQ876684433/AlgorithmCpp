@@ -10,4 +10,4 @@ add_executable(Chain Version2/DataStructureBasic/LinkedList/ChainNode.cpp Versio
 add_executable(IndirectList Version2/DataStructureBasic/IndirectList/IndirectList.cpp Version2/DataStructureBasic/IndirectList/IndirectList.h Version2/DataStructureBasic/IndirectList/ChainIterator.cpp Version2/DataStructureBasic/IndirectList/ChainIterator.h Version2/DataStructureBasic/IndirectList/IndirectListTest.cpp)
 add_executable(StackAndHeap Version2/StackAndHeap/Stack.h Version2/StackAndHeap/Stack.cpp Version2/StackAndHeap/LinkedStack.h Version2/StackAndHeap/LinkedStack.cpp Version2/StackAndHeap/Node.cpp Version2/StackAndHeap/Node.h)
 add_executable(Queue Version2/Queue/Queue.cpp Version2/Queue/Queue.h Version2/Queue/LinkedQueue.cpp Version2/Queue/LinkedQueue.h Version2/Queue/Node.cpp Version2/Queue/Node.h)
-add_executable(BinaryTree Version2/BinaryTree/BinaryTreeNode.cpp)
+add_executable(BinaryTree Version2/BinaryTree/BinaryTree.cpp Version2/BinaryTree/BinaryTreeNode.cpp Version2/BinaryTree/BinaryTreeNode.h Version2/BinaryTree/Demo.cpp Version2/BinaryTree/BinaryTree.h)

@@ -2,9 +2,11 @@
 // Created by steve on 18-7-28.
 //
 
+#include <exception>
 #include "LinkedQueue.h"
 #include "../StackAndHeap/Node.h"
 
+using namespace std;
 
 template<class T>
 LinkedQueue<T>::~LinkedQueue() {
@@ -22,7 +24,7 @@ bool LinkedQueue<T>::IsFull() const {
         Node<T> *p = new Node<T>;
         delete p;
         return false;
-    }catch (NoMem){
+    }catch (exception){
         return true;
     }
 }

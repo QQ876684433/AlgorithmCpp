@@ -1,49 +1,8 @@
 //
-// Created by steve on 18-7-29.
+// Created by steve on 18-7-30.
 //
 
-#include <search.h>
-#include <iostream>
-#include <exception>
-#include "../Queue/LinkedQueue.h"
-
-using namespace std;
-
-template<class T>
-class BinaryTreeNode {
-    friend void Visit(BinaryTreeNode<T> *);
-
-    friend void InOrder(BinaryTreeNode<T> *);
-
-    friend void PreOrder(BinaryTreeNode<T> *);
-
-    friend void PostOrder(BinaryTreeNode<T> *);
-
-    friend void LevelOrder(BinaryTreeNode<T> *);
-
-    friend void Infix(BinaryTreeNode<T> *t);
-
-    friend int main(void);
-
-public:
-    BinaryTreeNode() { LeftChild = RightChild = 0; }
-
-    BinaryTreeNode(const T &e) {
-        data = e;
-        LeftChild = RightChild = 0;
-    }
-
-    BinaryTreeNode(const T &e, BinaryTreeNode *l, BinaryTreeNode *r) {
-        data = e;
-        LeftChild = l;
-        RightChild = r;
-    }
-
-private:
-    T data;
-    BinaryTreeNode<T> *LeftChild, *RightChild;
-};
-
+#include "BinaryTreeNode.h"
 
 template<class T>
 void InOrder(BinaryTreeNode<T> *t) {
