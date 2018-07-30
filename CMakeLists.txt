@@ -12,3 +12,4 @@ add_executable(StackAndHeap Version2/StackAndHeap/Stack.h Version2/StackAndHeap/
 add_executable(Queue Version2/Queue/Queue.cpp Version2/Queue/Queue.h Version2/Queue/LinkedQueue.cpp Version2/Queue/LinkedQueue.h Version2/Queue/Node.cpp Version2/Queue/Node.h)
 add_executable(BinaryTree Version2/BinaryTree/BinaryTree.cpp Version2/BinaryTree/BinaryTreeNode.cpp Version2/BinaryTree/BinaryTreeNode.h Version2/BinaryTree/Demo.cpp Version2/BinaryTree/BinaryTree.h)
 add_executable(PriorityQueue Version2/PriorityQueue/MaxHeap.h Version2/PriorityQueue/MaxHeap.cpp)
+add_executable(CompetitionTree Version2/CompetitionTree/WinnerTree.h Version2/CompetitionTree/WinnerTree.cpp)
