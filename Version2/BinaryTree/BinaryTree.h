@@ -9,6 +9,7 @@
 
 template<class T>
 class BinaryTree {
+
 public:
     BinaryTree() { root = 0; }
 
@@ -38,6 +39,7 @@ public:
 
     void LevelOrder(void (*Visit)(BinaryTreeNode<T> *u));
 
+    void InOutput() { InOutput(root); }
 
 private:
     BinaryTreeNode<T> *root;
@@ -47,6 +49,8 @@ private:
     void InOrder(void (*Visit)(BinaryTreeNode<T> *u), BinaryTreeNode<T> *t);
 
     void PostOrder(void (*Visit)(BinaryTreeNode<T> *u), BinaryTreeNode<T> *t);
+
+    void InOutput(BinaryTreeNode<T> *t);
 
     void BadInput();
 };

@@ -64,15 +64,15 @@ void BinaryTree<T>::PostOrder(void (*Visit)(BinaryTreeNode<T> *), BinaryTreeNode
 
 template<class T>
 void BinaryTree<T>::LevelOrder(void (*Visit)(BinaryTreeNode<T> *)) {
-    LinkedQueue<BinaryTreeNode<T>*> Q;
+    LinkedQueue<BinaryTreeNode<T> *> Q;
     BinaryTreeNode<T> *t = root;
-    while (t){
+    while (t) {
         Visit(t);
         Q.Add(t->LeftChild);
         Q.Add(t->RightChild);
         try {
             Q.Delete(t);
-        }catch (exception){
+        } catch (exception) {
             return;
         }
     }
@@ -81,4 +81,13 @@ void BinaryTree<T>::LevelOrder(void (*Visit)(BinaryTreeNode<T> *)) {
 template<class T>
 BinaryTree<T>::~BinaryTree() {
 
+}
+
+template<class T>
+void BinaryTree<T>::InOutput(BinaryTreeNode<T> *t) {
+    if (t) {
+        InOutput(t->LeftChild);
+        cout << t->data << " ";
+        InOutput(t->RightChild);
+    }
 }
