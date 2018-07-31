@@ -36,6 +36,13 @@ BSTree<E, K> &BSTree<E, K>::Insert(const E &e) {
         } else throw BadInput();
     }
 
+//    若二叉搜索树中的不同元素可以包含相同的关键值，则称这种树为 D B S Tr e e。
+//    while (p){
+//        pp = p;
+//        if (e <= p->LeftChild) p = p->LeftChild;
+//        else p = p->RightChild;
+//    }
+
     BinaryTreeNode<E> *r = new BinaryTreeNode<E>(e);
     if (BinaryTree<E>::root) {
         if (e < pp->data) pp->LeftChild = r;
