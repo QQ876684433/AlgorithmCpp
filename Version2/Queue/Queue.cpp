@@ -2,7 +2,7 @@
 // Created by steve on 18-7-27.
 //
 
-#include "Queue.h"
+#include "Queen.h"
 
 template<class T>
 Queue<T>::Queue(int MaxQueueSize) {
