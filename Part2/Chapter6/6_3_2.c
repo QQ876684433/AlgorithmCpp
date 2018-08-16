@@ -101,6 +101,7 @@ int main() {
     }
     if (ret_code == 1) {
         for (int i = 0; i < MAX_N; ++i) {
+            if (ans[i] == 0) break;
             printf("%d ", ans[i]);
         }
         printf("\n");
