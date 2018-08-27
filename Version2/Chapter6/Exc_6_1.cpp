@@ -10,11 +10,13 @@ using namespace std;
 int main() {
     int n;
     cin >> n;
+    getchar();
 
     for (int i = 0; i < n; ++i) {
         stack<char> s;
         string str;
-        cin >> str;
+//        cin >> str;
+        getline(cin,str);
         int ptr = 0;
         bool flag = true;
         while (ptr < str.length()) {
