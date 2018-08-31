@@ -10,8 +10,7 @@ int main() {
     int case_num;
     cin >> case_num;
     int D, I;
-    while (case_num--) {
-        scanf("%d %d", &D, &I);
+    while (scanf("%d %d", &D, &I) == 2) {
         int cur = 1;
         for (int i = 1; i < D; ++i) {
             if (I % 2) {
@@ -26,6 +25,5 @@ int main() {
         }
         cout << cur << endl;
     }
-    cin >> case_num;
     return 0;
 }
