@@ -23,17 +23,18 @@ int main() {
         left[0] = n;
         right[0] = 1;
         right[n] = 0;
+        bool is_reverse = false;
 
         while (m--) {
             int type, X, Y;
             scanf("%d", &type);
-            if (type == 1) {
+            if ((type == 1 && !is_reverse) || (type==2 && is_reverse)) {
                 scanf("%d %d", &X, &Y);
                 right[left[X]] = right[X];
                 left[right[X]] = left[X];
                 bind(left[Y], X);
                 bind(X, Y);
-            } else if (type == 2) {
+            } else if ((type == 1 && is_reverse) || (type==2 && !is_reverse)) {
                 scanf("%d %d", &X, &Y);
                 right[left[X]] = right[X];
                 left[right[X]] = left[X];
@@ -53,18 +54,27 @@ int main() {
                 right[X] = right[Y];
                 right[Y] = temp;
             } else {
-                for (int i = 0; i <= n; ++i) {
-                    int temp = left[i];
-                    left[i] = right[i];
-                    right[i] = temp;
-                }
+//                for (int i = 0; i <= n; ++i) {
+//                    int temp = left[i];
+//                    left[i] = right[i];
+//                    right[i] = temp;
+//                }
+                is_reverse = !is_reverse;
             }
         }
         long long result = 0;
-        int cur = right[0];
-        for (int j = 1; j <= n; ++j) {
-            if (j % 2) result += cur;
-            cur = right[cur];
+        if (!is_reverse) {
+            int cur = right[0];
+            for (int j = 1; j <= n; ++j) {
+                if (j % 2) result += cur;
+                cur = right[cur];
+            }
+        } else {
+            int cur = left[0];
+            for (int j = 1; j <= n; ++j) {
+                if (j % 2) result += cur;
+                cur = left[cur];
+            }
         }
         printf("Case %d: %lli\n", i++, result);
     }
