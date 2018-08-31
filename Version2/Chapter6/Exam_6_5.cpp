@@ -54,11 +54,6 @@ int main() {
                 right[X] = right[Y];
                 right[Y] = temp;
             } else {
-//                for (int i = 0; i <= n; ++i) {
-//                    int temp = left[i];
-//                    left[i] = right[i];
-//                    right[i] = temp;
-//                }
                 is_reverse = !is_reverse;
             }
         }
