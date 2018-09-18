@@ -75,3 +75,6 @@ add_executable(Exam_6_10 Version2/Chapter6/Exam_6_10.cpp)
 add_executable(Exam_6_11 Version2/Chapter6/Exam_6_11.cpp)
 add_executable(Exam_6_12 Version2/Chapter6/Exam_6_12.cpp)
 add_executable(Exam_6_15 Version2/Chapter6/Exam_6_15.cpp)
+add_executable(Exam_6_16 Version2/Chapter6/Exam_6_16.cpp)
+
+add_executable(POJ_1_1 POJ/Chapter1/1.cpp)
