@@ -10,7 +10,7 @@ using namespace std;
 int solution(int m, int n) {
     if (m < 0) return 0;
     else if (m == 0|| n == 1) return 1;//找到一个方案
-    return solution(m, n - 1) + solution(m - n, n);//有0的情况和没有0的情况
+    return solution(m, n - 1) + solution(m - n, n);//其中一个盒子里有0的情况和所有盒子没有0的情况
 }
 
 int main() {
