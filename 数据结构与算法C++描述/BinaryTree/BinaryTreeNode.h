@@ -9,6 +9,8 @@
 // Created by steve on 18-7-29.
 //
 
+static const int SIZE = 1000000;
+
 #include <search.h>
 #include <iostream>
 #include <exception>
