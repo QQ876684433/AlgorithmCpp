@@ -8,9 +8,72 @@
 
 using namespace std;
 
-void get_post_order(const string &exp, queue<char> &post_order, stack<char> &operation);
 
-int get_result(queue<char> &post_order);
+void calculate(char ch, stack<int> &operand) {
+    int a = operand.top();
+    operand.pop();
+    switch (ch) {
+        case '+':
+            operand.top() += a;
+            break;
+        case '-':
+            operand.top() -= a;
+            break;
+        case '*':
+            operand.top() *= a;
+            break;
+        case '/':
+            operand.top() /= a;
+            break;
+        default:
+            break;
+    }
+}
+
+int getResult(string exp) {
+    stack<int> operand;//操作数栈
+    stack<char> operation;//操作符栈
+    for (int i = 0; i < exp.length(); ++i) {
+        char ch = exp[i];
+        if (isdigit(ch) || isalpha(ch)) {
+            int num = 0;
+            int j;
+            for (j = i; j < exp.length(); ++j) {
+                if (!isdigit(exp[j]) && !isalpha(exp[j])) break;
+                num = num * 10 + exp[j] - '0';
+            }
+            i = j - 1;
+            operand.push(num);//操作数入栈
+        } else if (ch == '(') operation.push(ch);
+        else if (ch == ')') {
+            while (operation.top() != '(') {
+                calculate(operation.top(), operand);
+                operation.pop();
+            }
+            operation.pop();
+        } else if (ch == '+' || ch == '-') {
+            while (!operation.empty() && (operation.top() == '+' || operation.top() == '-' || operation.top() == '*' ||
+                                          operation.top() == '/')) {
+                calculate(operation.top(), operand);
+                operation.pop();
+            }
+            operation.push(ch);
+        } else if (ch == '*' || ch == '/') {
+            while (!operation.empty() && (operation.top() == '*' || operation.top() == '/')) {
+                calculate(operation.top(), operand);
+                operation.pop();
+            }
+            operation.push(ch);
+        }
+    }
+    //计算操作符栈的剩余操作符
+    while (!operation.empty()) {
+        calculate(operation.top(), operand);
+        operation.pop();
+    }
+    return operand.top();
+}
+
 
 int main() {
     int N;
@@ -20,80 +83,11 @@ int main() {
         string exp1, exp2;
         getline(cin, exp1);
         getline(cin, exp2);
-        queue<char> post_order1;
-        queue<char> post_order2;
-        stack<char> operation;
-        get_post_order(exp1, post_order1, operation);
-        int res1 = get_result(post_order1);
-        get_post_order(exp2, post_order2, operation);
-        int res2 = get_result(post_order2);
+        int res1 = getResult(exp1);
+        int res2 = getResult(exp2);
         if (res1 == res2)cout << "YES" << endl;
         else cout << "NO" << endl;
     }
     return 0;
 }
 
-int get_result(queue<char> &post_order) {
-    stack<int> operand;
-    int a, b;
-    while (!post_order.empty()) {
-        if (post_order.front() == '-') {
-            b = operand.top();
-            operand.pop();
-            a = operand.top();
-            operand.pop();
-            int result = a - b;
-            operand.push(result);
-        } else if (post_order.front() == '*') {
-            b = operand.top();
-            operand.pop();
-            a = operand.top();
-            operand.pop();
-            int result = a * b;
-            operand.push(result);
-        } else if (post_order.front() == '+') {
-            b = operand.top();
-            operand.pop();
-            a = operand.top();
-            operand.pop();
-            int result = a + b;
-            operand.push(result);
-        } else {
-            if (post_order.front() >= '0' && post_order.front() <= '9')operand.push(post_order.front() - '0');
-            else
-                operand.push(post_order.front());
-        }
-        post_order.pop();
-    }
-    return operand.top();
-}
-
-void get_post_order(const string &exp, queue<char> &post_order, stack<char> &operation) {
-    for (int i = 0; i < exp.length(); ++i) {
-        if (exp[i] == ')') {
-            while (operation.top() != '(') {
-                post_order.push(operation.top());
-                operation.pop();
-            }
-            operation.pop();
-        } else if (exp[i] == '*') {
-            while (!operation.empty() && operation.top() == '*') {
-                post_order.push(operation.top());
-                operation.pop();
-            }
-            operation.push(exp[i]);
-        } else if (exp[i] == '+' || exp[i] == '-') {
-            while (!operation.empty() && (operation.top() == '*' || operation.top() == '-' || operation.top() == '+')) {
-                post_order.push(operation.top());
-                operation.pop();
-            }
-            operation.push(exp[i]);
-        } else if (exp[i] == '(') {
-            operation.push('(');
-        } else if (exp[i] == ' ') {
-            continue;
-        } else post_order.push(exp[i]);
-    }
-    post_order.push(operation.top());
-    operation.pop();
-}
