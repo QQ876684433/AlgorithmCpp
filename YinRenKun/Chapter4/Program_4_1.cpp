@@ -85,7 +85,24 @@ SparseMatrix<T> &SparseMatrix<T>::operator=(SparseMatrix<T> &x) {
 
 template<class T>
 SparseMatrix<T> SparseMatrix<T>::Transpose() {
-    return SparseMatrix<T>();
+    SparseMatrix<T> b(maxTerms);
+    b.Rows = Rows;
+    b.Cols = Cols;
+    b.Terms = Terms;
+    if (Terms > 0) {
+        int currentB = 0;
+        for (int i = 0; i < Cols; ++i) {
+            for (int j = 0; j < Terms; ++j) {
+                if (smArray[j].col == i){
+                    b.smArray[currentB].row = i;
+                    b.smArray[currentB].col = smArray[i].row;
+                    b.smArray[currentB].value = smArray[i].value;
+                    currentB++;
+                }
+            }
+        }
+    }
+    return b;
 }
 
 template<class T>
