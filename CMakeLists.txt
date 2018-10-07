@@ -97,3 +97,4 @@ add_executable(POJ_3_5 POJ/Chapter3/5.cpp)
 add_executable(POJ_3_6 POJ/Chapter3/6.cpp)
 
 add_executable(YinRenKun_4_1 YinRenKun/Chapter4/Program_4_1.cpp)
+add_executable(YinRenKun_4_5 YinRenKun/Chapter4/Program_4_5.cpp)
