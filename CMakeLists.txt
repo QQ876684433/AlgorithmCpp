@@ -95,6 +95,10 @@ add_executable(POJ_3_3 POJ/Chapter3/3.cpp)
 add_executable(POJ_3_4 POJ/Chapter3/4.c)
 add_executable(POJ_3_5 POJ/Chapter3/5.cpp)
 add_executable(POJ_3_6 POJ/Chapter3/6.cpp)
+add_executable(POJ_3_8 POJ/Chapter3/8.cpp)
 
 add_executable(YinRenKun_4_1 YinRenKun/Chapter4/Program_4_1.cpp)
 add_executable(YinRenKun_4_5 YinRenKun/Chapter4/Program_4_5.cpp)
+add_executable(YinRenKun_5_BinTree YinRenKun/Chapter5/BinTree.cpp)
+
+add_executable(typed_printf typed_printf_copy.cpp)
