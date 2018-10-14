@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -56,9 +57,13 @@ public:
 
     void LevelOrder(void(*visit)(BinTreeNode<T> *p));
 
+    BinTreeNode<T> *CreateBinTreeByPreAndInOrder(T *VLR, T *LVR, int n);
+
     int Insert(const T &item);
 
     BinTreeNode<T> *Find(T &item) const;
+
+    void PrintBinTree(BinTreeNode<T> *subTree);
 
     friend int operator==(BinTree<T> &l, BinTree<T> &r);
 
@@ -69,6 +74,7 @@ protected:
     T refVal;
 
     void CreateBinTree(istream &in, BinTreeNode<T> *&subTree);
+
 
     bool Insert(BinTreeNode<T> *&subTree, const T &x);
 
@@ -90,9 +96,19 @@ protected:
 
     void PreOrder(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *p));
 
+    void PreOrderNotRecursive1(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *p));
+
+    void PreOrderNotRecursive2(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *p));
+
     void InOrder(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *p));
 
+    void InOrderNotRecursive(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *p));
+
     void PostOrder(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *p));
+
+    void PostOrderNotRecursive(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *p));
+
+    void LevelOrder(BinTreeNode<T> *subTree, void(*visit)(BinTreeNode<T> *p));
 
     friend istream &operator>>(istream &in, BinTree<T> &Tree);
 
@@ -234,6 +250,146 @@ bool equal(BinTreeNode<T> &l, BinTreeNode<T> &r) {
     if (l == NULL && r == NULL)return true;
     return l != NULL && r != NULL && l.data == r.data && equal(l.leftChild, r.leftChild) &&
            equal(l.rightChild, r.rightChild);
+}
+
+template<class T>
+void BinTree<T>::PrintBinTree(BinTreeNode<T> *subTree) {
+    if (subTree != NULL) {
+        cout << subTree->data;
+        if (subTree->leftChild != NULL || subTree->rightChild != NULL) {
+            cout << '(';
+            PrintBinTree(subTree->leftChild);
+            cout << ',';
+            PrintBinTree(subTree->rightChild);
+            cout << ')';
+        }
+    }
+}
+
+template<class T>
+void BinTree<T>::PreOrderNotRecursive1(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *)) {
+    stack<BinTreeNode<T> *> s;
+    BinTreeNode<T> *p = subTree;
+    s.push(NULL);
+    while (p) {
+        visit(p);
+        if (p->rightChild) s.push(p->rightChild);
+        if (p->leftChild)p = p->leftChild;
+        else {
+            p = s.top();
+            s.pop();
+        }
+    }
+}
+
+template<class T>
+void BinTree<T>::PreOrderNotRecursive2(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *)) {
+    stack<BinTreeNode<T> *> s;
+    BinTreeNode<T> *p;
+    s.push(subTree);
+    while (!s.empty()) {
+        p = s.top();
+        s.pop();
+        visit(p);
+        if (p->rightChild)s.push(p->rightChild);
+        if (p->leftChild)s.push(p->leftChild);
+    }
+}
+
+template<class T>
+void BinTree<T>::LevelOrder(void (*visit)(BinTreeNode<T> *)) {
+    LevelOrder(root, visit);
+}
+
+template<class T>
+void BinTree<T>::LevelOrder(BinTreeNode<T> *subTree, void (*visit)(BinTreeNode<T> *)) {
+    queue<BinTreeNode<T> *> q;
+    q.push(subTree);
+    BinTreeNode<T> *p;
+    while (!q.empty()) {
+        p = q.front();
+        q.pop();
+        visit(p);
+        if (p->leftChild)q.push(p->leftChild);
+        if (p->rightChild)q.push(p->rightChild);
+    }
+}
+
+template<class T>
+void BinTree<T>::InOrderNotRecursive(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *)) {
+    stack<BinTreeNode<T> *> s;
+    BinTreeNode<T> *p = subTree;
+    do {
+        while (p != NULL) {
+            s.push(p);
+            p = p->leftChild;
+        }
+        if (!s.empty()) {
+            p = s.top();
+            s.pop();
+            visit(p);
+            p = p->rightChild;
+        }
+    } while (p != NULL || !s.empty());
+}
+
+template<typename T>
+struct stkNode {
+    BinTreeNode<T> *ptr;
+    enum {
+        L, R
+    } tag;
+
+    stkNode(BinTreeNode<T> *N = NULL) : ptr(N), tag(L) {}
+};
+
+template<class T>
+void BinTree<T>::PostOrderNotRecursive(BinTreeNode<T> &subTree, void (*visit)(BinTreeNode<T> *)) {
+    stack<stkNode<T>> s;
+    BinTreeNode<T> *p = subTree;
+    do {
+        while (p) {
+            stkNode<T> t(p);
+            s.push(t);
+            p = p->leftChild;
+        }
+        int continue1 = 1;//1表示继续退栈；0表示进入右子树，开始遍历，根结点暂时不出栈
+        while (continue1 && !s.empty()) {
+            stkNode<T> t = s.top();
+            s.pop();
+            p = t.ptr;
+            switch (t.tag) {
+                case t.L:
+                    t.tag = t.R;
+                    s.push(t);
+                    continue1 = 0;
+                    p = p->rightChild;
+                    break;
+                case t.R:
+                    visit(p);
+                    break;
+            }
+        }
+    } while (!s.empty());
+}
+
+template<class T>
+/**
+ *
+ * @tparam T
+ * @param VLR 前序遍历
+ * @param LVR 中序遍历
+ * @param n 结点个数
+ * @return
+ */
+BinTreeNode<T> *BinTree<T>::CreateBinTreeByPreAndInOrder(T *VLR, T *LVR, int n) {
+    if (n == 0)return NULL;
+    int k = 0;
+    while (VLR[0] != LVR[k])k++;
+    auto *t = new BinTreeNode<T>(VLR[0]);
+    t->leftChild = CreateBinTreeByPreAndInOrder(VLR + 1, LVR, k);
+    t->rightChild = CreateBinTreeByPreAndInOrder(VLR + k + 1, LVR + k + 1, n - k - 1);
+    return t;
 }
 
 
