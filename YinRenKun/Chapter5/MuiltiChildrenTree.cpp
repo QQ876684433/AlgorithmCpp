@@ -41,3 +41,30 @@ public:
 
     bool Find(T target);
 };
+
+template<typename T>
+bool Tree<T>::Root() {
+    if (root == NULL) {
+        current = NULL;
+        return false;
+    }
+    current = root;
+    return true;
+}
+
+template<typename T>
+bool Tree<T>::Parent() {
+    if (current==NULL||current==root) {
+        current=NULL;
+        return false;
+    } else{
+        TreeNode<T>*p=current;
+        current=FindParent(root,p);
+        return true;
+    }
+}
+
+template<typename T>
+bool Tree<T>::FindParent(TreeNode<T> *t, TreeNode<T> *p) {
+
+}
