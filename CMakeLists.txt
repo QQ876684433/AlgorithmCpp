@@ -109,3 +109,4 @@ add_executable(preorderTraversal LeetCode/二叉树专题/二叉树的前序遍�
 add_executable(inorderTraversal LeetCode/二叉树专题/inorderTraversal.cpp)
 add_executable(postorderTraversal LeetCode/二叉树专题/postorderTraversal.cpp)
 add_executable(levelOrder LeetCode/二叉树专题/levelOrder.cpp LeetCode/二叉树专题/leetcode.h)
+add_executable(maxDepth LeetCode/二叉树专题/maxDepth.cpp LeetCode/二叉树专题/leetcode.h)
