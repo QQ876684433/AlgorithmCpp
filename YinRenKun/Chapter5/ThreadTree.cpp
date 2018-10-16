@@ -43,6 +43,8 @@ public:
     void PreOrder(void (*visit)(ThreadNode<T> *p));
 
     void PostOrder(void (*visit)(ThreadNode<T> *p));
+
+    void InsertRight(ThreadNode<T> *s, ThreadNode<T> *r);
 };
 
 template<typename T>
@@ -146,5 +148,26 @@ void ThreadTree<T>::PostOrder(void (*visit)(ThreadNode<T> *)) {
 
 template<typename T>
 ThreadNode<T> *ThreadTree<T>::Parent(ThreadNode<T> *t) {
+    ThreadNode<T> *p;
+    if (t == NULL) return NULL;
+    for (p = t; p->ltag == 0; p = p->leftChild);
+    if (p->leftChild != NULL) {//
+        for (p = p->leftChild; p != NULL && p->leftChild != t && p->rightChild != t; p = p->rightChild);
+    }
+    if (p == NULL || p->leftChild == NULL) {
+        for (p = t; p->rtag == 0; p = p->rightChild);
+        for (p = p->rightChild; p != NULL && p->leftChild != t && p->rightChild != t; p = p->leftChild);
+    }
+    return p;
+}
 
+template<typename T>
+void ThreadTree<T>::InsertRight(ThreadNode<T> *s, ThreadNode<T> *r) {
+    r->rightChild = s->rightChild;
+    r->rtag = s->rtag;
+    r->leftChild = s;
+    r->ltag = 1;
+    s->rightChild = r;
+    s->rtag = 0;
+    if (r->rtag == 0) First(r->rightChild)->leftChild = r;
 }
