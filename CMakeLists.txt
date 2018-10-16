@@ -105,3 +105,4 @@ add_executable(YinRenKun_5_ThreadTree YinRenKun/Chapter5/ThreadTree.cpp)
 add_executable(typed_printf typed_printf_copy.cpp)
 
 add_executable(preorderTraversal LeetCode/二叉树专题/二叉树的前序遍历.cpp)
+add_executable(inorderTraversal LeetCode/二叉树专题/inorderTraversal.cpp)
