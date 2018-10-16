@@ -324,9 +324,8 @@ void BinTree<T>::InOrderNotRecursive(BinTreeNode<T> &subTree, void (*visit)(BinT
             s.push(p);
             p = p->leftChild;
         }
+        p=s.top();s.pop();
         if (!s.empty()) {
-            p = s.top();
-            s.pop();
             visit(p);
             p = p->rightChild;
         }

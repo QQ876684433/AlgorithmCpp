@@ -39,6 +39,25 @@ public:
         }
         return ret;
     }
+
+    vector<int> InorderTraversal(TreeNode *root) {
+        TreeNode *cur = root;
+        vector<int> ret;
+        stack<TreeNode *> s;
+        s.push(NULL);
+        do {
+            while (cur){
+                s.push(cur);cur=cur->left;
+            }
+            cur=s.top();s.pop();
+            if (!s.empty()){
+                ret.push_back(cur->val);cur=cur->right;
+            }
+        } while (cur || !s.empty());
+        return ret;
+    }
+
+
 };
 
 int main() {
@@ -46,6 +65,6 @@ int main() {
     TreeNode *root = new TreeNode(1);
     root->right = new TreeNode(2);
     root->right->left = new TreeNode(3);
-    s.inorderTraversal(root);
+    s.InorderTraversal(root);
     return 0;
 }
