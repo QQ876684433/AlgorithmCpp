@@ -48,6 +48,8 @@ add_executable(107_cpp LeetCode/107.cpp)
 add_executable(111_cpp LeetCode/111.cpp)
 add_executable(111_another LeetCode/111_another.cpp)
 add_executable(126 LeetCode/126.cpp)
+add_executable(MakeTreeByPostOrder MakeTreeByPostOrder.cpp)
+
 add_executable(6_1_1 Version1/Chapter6/6_1_1.cpp)
 add_executable(6_1_2 Version1/Chapter6/6_1_2.c)
 add_executable(6_1_2_cpp Version1/Chapter6/6_1_2.cpp)
