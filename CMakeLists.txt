@@ -99,11 +99,13 @@ add_executable(POJ_3_5 POJ/Chapter3/5.cpp)
 add_executable(POJ_3_6 POJ/Chapter3/6.cpp)
 add_executable(POJ_3_8 POJ/Chapter3/8.cpp)
 
+add_executable(YinRenKun_3_PriorQueue YinRenKun/Chapter3/PriorQueue.cpp)
 add_executable(YinRenKun_4_1 YinRenKun/Chapter4/Program_4_1.cpp)
 add_executable(YinRenKun_4_5 YinRenKun/Chapter4/Program_4_5.cpp)
 add_executable(YinRenKun_5_BinTree YinRenKun/Chapter5/BinTree.cpp)
 add_executable(YinRenKun_5_ThreadTree YinRenKun/Chapter5/ThreadTree.cpp)
 add_executable(YinRenKun_5_MuiltiChildrenTree YinRenKun/Chapter5/MuiltiChildrenTree.cpp)
+add_executable(YinRenKun_5_MinHeap YinRenKun/Chapter5/MinHeap.cpp)
 
 add_executable(typed_printf typed_printf_copy.cpp)
 
