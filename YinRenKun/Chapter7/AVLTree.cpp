@@ -30,6 +30,8 @@ public:
 
     bool Remove(K x, E &el) { return Remove(root, x, el); }
 
+    void Traverse(AVLNode<E, K> *ptr, ostream &out) const;
+
     friend istream &operator>>(istream &in, AVLTree<E, K> &Tree);
 
     friend ostream &operator<<(ostream &out, const AVLNode<E, K> &Tree);
@@ -177,4 +179,35 @@ bool AVLTree<E, K>::Insert(AVLNode<E, K> *&ptr, E &el) {
         else q->right = pr;
     }
     return true;
+}
+
+template<class E, class K>
+istream &operator>>(istream &in, AVLTree<E, K> &Tree) {
+    E item;
+    cout << "Construct AVL tree:\n";
+    cout << "Input data (end with" << Tree.RefValue << "):";
+    in >> item;
+    while (item.key != Tree.RefValue) {
+        Tree.Insert(item);
+        cout << "Input data (end with" << Tree.RefValue << "):";
+        in >> item;
+    }
+    return in;
+}
+
+template<class E, class K>
+ostream &operator<<(ostream &out, const AVLTree<E, K> &Tree) {
+    out << "In order traverse of AVL tree.\n";
+    Tree.Traverse(Tree.root, out);
+    out << endl;
+    return out;
+}
+
+template<class E, class K>
+void AVLTree<E, K>::Traverse(AVLNode<E, K> *ptr, ostream &out) const {
+    if (ptr) {
+        Traverse(ptr->left, out);
+        out << ptr->data;
+        Traverse(ptr->right, out);
+    }
 }
