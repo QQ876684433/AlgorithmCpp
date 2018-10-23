@@ -16,12 +16,31 @@ struct AVLNode : public BSTNode<E, K> {
     AVLNode() : left(NULL), right(NULL), bf(0) {}
 
     AVLNode(E d, AVLNode<E, K> *l = NULL, AVLNode<E, K> *r = NULL) : data(d), left(l), right(r), bf(0) {}
+
 };
 
 template<class E, class K>
 class AVLTree : public BST<E, K> {
 public:
+    AVLTree() : root(NULL) {}
+
+    AVLTree(K Ref) : RefValue(Ref), root(NULL) {}
+
+    bool Insert(E &el) { return Insert(el, root); }
+
+    bool Remove(K x, E &el) { return Remove(root, x, el); }
+
+    friend istream &operator>>(istream &in, AVLTree<E, K> &Tree);
+
+    friend ostream &operator<<(ostream &out, const AVLNode<E, K> &Tree);
+
+    int Height() const;
+
 protected:
+    BSTNode<E, K> *root;
+
+    K RefValue;
+
     AVLNode<E, K> *Search(K x, AVLNode<E, K> *&par) const;
 
     bool Insert(AVLNode<E, K> *&ptr, E &el);
