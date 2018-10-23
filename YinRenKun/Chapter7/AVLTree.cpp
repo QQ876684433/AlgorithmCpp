@@ -3,12 +3,11 @@
 //
 
 #include <iostream>
-#include "BST.cpp"
 
 using namespace std;
 
 template<class E, class K>
-struct AVLNode : public BSTNode<E, K> {
+struct AVLNode {
     int bf;
     E data;
     AVLNode<E, K> *left, *right;
@@ -20,7 +19,7 @@ struct AVLNode : public BSTNode<E, K> {
 };
 
 template<class E, class K>
-class AVLTree : public BST<E, K> {
+class AVLTree {
 public:
     AVLTree() : root(NULL) {}
 
@@ -37,7 +36,7 @@ public:
     int Height() const;
 
 protected:
-    BSTNode<E, K> *root;
+    AVLNode<E, K> *root;
 
     K RefValue;
 
@@ -57,3 +56,8 @@ protected:
 
     int Height(AVLNode<E, K> *ptr) const;
 };
+
+template<class E, class K>
+void AVLTree<E, K>::RotateL(AVLNode<E, K> *&ptr) {
+
+}
