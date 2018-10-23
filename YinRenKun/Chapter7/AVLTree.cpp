@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -114,5 +115,66 @@ void AVLTree<E, K>::RotateRL(AVLNode<E, K> *&ptr) {
     if (ptr->bf == 1)subL->bf = -1;
     else subL->bf = 0;
 
-    ptr->bf=0;
+    ptr->bf = 0;
+}
+
+template<class E, class K>
+bool AVLTree<E, K>::Insert(AVLNode<E, K> *&ptr, E &el) {
+    AVLNode<E, K> *pr = NULL, *p = ptr, *q;
+    int d;
+    stack<AVLNode<E, K> *> st;
+    while (p) {
+        if (el == p->data)return false;
+        pr = p;
+        st.push(pr);
+        if (el < p->data) p = p->left;
+        else p = p->right;
+    }
+    p = new AVLNode<E, K>(el);
+
+    if (pr == NULL) {//空树，新结点成为根结点
+        ptr = p;
+        return true;
+    }
+
+    //新结点插入
+    if (el < pr->data)pr->left = p;
+    else pr->right = p;
+
+    while (!st.empty()) {//重新平衡化
+        pr = st.top();
+        st.pop();
+
+        //调整父节点平衡因子
+        if (p == pr->left)pr->bf--;
+        else pr->bf++;
+
+        if (pr->bf == 0)break;//高度没变，不需要平衡化调整
+        if (abs(pr->bf) == 1) {
+            p = pr;//当前子树不需要平衡化，进行回溯
+        } else {
+            d = pr->bf < 0 ? -1 : 1;//区分单双旋标识
+            if (p->bf == d) {//两结点平衡因子同号，进行单旋
+                if (d == -1)//进行右旋
+                    RotateR(pr);
+                else
+                    RotateL(pr);
+            } else {
+                if (d == -1)
+                    RotateLR(pr);//"<"型，先左后右双旋转
+                else
+                    RotateRL(pr);//">"型，先右后左双旋转
+            }
+            //不需要回溯调整
+            break;
+        }
+    }
+
+    if (st.empty())ptr = pr;//调整到树的根结点
+    else {
+        q = st.top();
+        if (q->data > pr->data)q->left = pr;
+        else q->right = pr;
+    }
+    return true;
 }
