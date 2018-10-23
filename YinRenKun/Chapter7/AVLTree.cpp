@@ -74,3 +74,45 @@ void AVLTree<E, K>::RotateR(AVLNode<E, K> *&ptr) {
     ptr->right = subR;
     ptr->bf = subR->bf = 0;
 }
+
+template<class E, class K>
+void AVLTree<E, K>::RotateLR(AVLNode<E, K> *&ptr) {
+    AVLNode<E, K> *subL = ptr->left, *subR = ptr;
+    ptr = subL->right;
+    subL->right = ptr->left;
+    ptr->left = subL;
+
+    //处理平衡因子
+    if (ptr->bf <= 0)subL->bf = 0;
+    else subL->bf = -1;
+
+    subR->left = ptr->right;
+    ptr->right = subR;
+
+    //处理平衡因子
+    if (ptr->bf == -1)subR->bf = 1;
+    else subR->bf = 0;
+
+    ptr->bf = 0;
+}
+
+template<class E, class K>
+void AVLTree<E, K>::RotateRL(AVLNode<E, K> *&ptr) {
+    AVLNode<E, K> *subR = ptr->right, *subL = ptr;
+    ptr = subR->left;
+    subR->left = ptr->right;
+    ptr->right = subR;
+
+    //处理平衡因子
+    if (ptr->bf >= 0) subR->bf = 0;
+    else subR->bf = 1;
+
+    subL->right = ptr->left;
+    ptr->left = subL;
+
+    //处理平衡因子
+    if (ptr->bf == 1)subL->bf = -1;
+    else subL->bf = 0;
+
+    ptr->bf=0;
+}
