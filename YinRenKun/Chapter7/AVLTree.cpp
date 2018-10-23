@@ -59,5 +59,9 @@ protected:
 
 template<class E, class K>
 void AVLTree<E, K>::RotateL(AVLNode<E, K> *&ptr) {
-
+    AVLNode<E, K> *subL = ptr;
+    ptr = subL->right;
+    subL->right = ptr->left;
+    ptr->left = subL;
+    ptr->bf = subL->bf = 0;
 }
