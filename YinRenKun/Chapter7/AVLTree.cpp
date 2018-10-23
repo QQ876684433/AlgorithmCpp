@@ -65,3 +65,12 @@ void AVLTree<E, K>::RotateL(AVLNode<E, K> *&ptr) {
     ptr->left = subL;
     ptr->bf = subL->bf = 0;
 }
+
+template<class E, class K>
+void AVLTree<E, K>::RotateR(AVLNode<E, K> *&ptr) {
+    AVLNode<E, K> *subR = ptr;
+    ptr = subR->left;
+    subR->left = ptr->right;
+    ptr->right = subR;
+    ptr->bf = subR->bf = 0;
+}
