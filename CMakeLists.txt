@@ -107,6 +107,7 @@ add_executable(YinRenKun_5_BinTree YinRenKun/Chapter5/BinTree.cpp)
 add_executable(YinRenKun_5_ThreadTree YinRenKun/Chapter5/ThreadTree.cpp)
 add_executable(YinRenKun_5_MuiltiChildrenTree YinRenKun/Chapter5/MuiltiChildrenTree.cpp)
 add_executable(YinRenKun_5_MinHeap YinRenKun/Chapter5/MinHeap.cpp)
+add_executable(YinRenKun_5_HuffmanTree YinRenKun/Chapter5/HuffmanTree.cpp)
 add_executable(YinRenKun_7_BST YinRenKun/Chapter7/BST.cpp)
 add_executable(YinRenKun_7_AVLTree YinRenKun/Chapter7/AVLTree.cpp)
 
