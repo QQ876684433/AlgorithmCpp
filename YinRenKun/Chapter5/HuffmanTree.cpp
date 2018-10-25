@@ -24,6 +24,12 @@ struct HuffmanNode {
                       rightChild),
               parent(parent) {}
 
+    /**
+     * 重载<=和>以便能够在最小堆中进行比较
+     *
+     * @param R 右操作数
+     * @return
+     */
     bool operator<=(HuffmanNode &R) { return data <= R.data; }
 
     bool operator>(HuffmanNode &R) { return data > R.data; }
@@ -43,4 +49,31 @@ public:
     ~HuffmanTree() = default;
 
 };
+
+HuffmanTree::HuffmanTree(float *w, int n) {
+    HuffmanNode *parent = NULL, first, second, work;
+    MinHeap<HuffmanNode> hp;
+    for (int i = 0; i < n; ++i) {
+        work.data = w[i];
+        work.parent = work.leftChild = work.rightChild = NULL;
+        hp.Insert(work);
+    }
+    for (int j = 0; j < n - 1; ++j) {
+        hp.RemoveMin(first);
+        hp.RemoveMin(second);
+        mergeTree(first, second, parent);
+        hp.Insert(*parent);
+    }
+    root = parent;
+}
+
+void HuffmanTree::mergeTree(HuffmanNode &ht1, HuffmanNode &ht2, HuffmanNode *&parent) {
+    //小值在左子女，大值在右子女
+    parent = new HuffmanNode;
+    parent->leftChild = &ht1;
+    parent->rightChild = &ht2;
+    parent->data = ht1.data + ht2.data;
+    ht1.parent = parent;
+    ht2.parent = parent;
+}
 
