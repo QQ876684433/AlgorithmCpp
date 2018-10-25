@@ -84,3 +84,41 @@ void MinHeap<E>::siftDown(int start, int m) {
     //while循环结束时，i为指向temp应该存放的位置
     heap[i] = temp;
 }
+
+template<typename E>
+void MinHeap<E>::siftUp(int start) {
+    E temp = heap[start];
+    int j = start, i = (j - 1) / 2;
+    while (j > 0) {
+        if (heap[i] <= temp)break;
+        else {
+            heap[j] = heap[i];
+            j = i;
+            i = (j - 1) / 2;
+        }
+    }
+    heap[j] = temp;
+}
+
+template<typename E>
+bool MinHeap<E>::Insert(const E &x) {
+    if (currentSize == maxHeapSize) {
+        cerr << "Heap full!" << endl;
+        return false;
+    }
+    heap[currentSize] = x;
+    siftUp(currentSize++);
+    return true;
+}
+
+template<typename E>
+bool MinHeap<E>::RemoveMin(E &x) {
+    if (IsEmpty()) {
+        cout << "Heap empty!" << endl;
+        return false;
+    }
+    x = heap[0];
+    heap[0] = heap[--currentSize];
+    siftDown(0, currentSize - 1);
+    return true;
+}

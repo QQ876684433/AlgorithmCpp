@@ -7,7 +7,8 @@
 
 using namespace std;
 
-int main(){
-    cout << pow(2,15)-1 << endl;
+int main() {
+    int a = -2147483648;
+    cout << (a == -a) << endl;
     return 0;
 }
