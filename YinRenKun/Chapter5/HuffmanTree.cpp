@@ -32,7 +32,11 @@ struct HuffmanNode {
      */
     bool operator<=(HuffmanNode &R) { return data <= R.data; }
 
+    bool operator<(HuffmanNode &R) { return data < R.data; }
+
     bool operator>(HuffmanNode &R) { return data > R.data; }
+
+    bool operator>=(HuffmanNode &R) { return data >= R.data; }
 };
 
 class HuffmanTree {
@@ -77,3 +81,7 @@ void HuffmanTree::mergeTree(HuffmanNode &ht1, HuffmanNode &ht2, HuffmanNode *&pa
     ht2.parent = parent;
 }
 
+int main() {
+    float w[] = {7.0, 5.0, 2.0, 4.0};
+    HuffmanTree h(w, 4);
+}

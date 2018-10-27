@@ -9,7 +9,7 @@
 using namespace std;
 
 template<typename E>
-class MinHeap : public PriorQueue<E> {
+class MinHeap{
 public:
     MinHeap(int sz = DefaultSize);
 
