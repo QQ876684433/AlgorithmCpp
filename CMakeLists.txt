@@ -109,8 +109,9 @@ add_executable(YinRenKun_5_MuiltiChildrenTree YinRenKun/Chapter5/MuiltiChildrenT
 add_executable(YinRenKun_5_MinHeap YinRenKun/Chapter5/MinHeap.cpp)
 add_executable(YinRenKun_5_HuffmanTree YinRenKun/Chapter5/HuffmanTree.cpp)
 add_executable(YinRenKun_7_BST YinRenKun/Chapter7/BST.cpp)
-add_executable(YinRenKun_7_AVLTree YinRenKun/Chapter7/AVLTree.cpp)
+add_executable(YinRenKun_7_AVLTree YinRenKun/Chapter7/AVLTree.cpp YinRenKun/Chapter7/BST.cpp)
 add_executable(YinRenKun_10_Mtree YinRenKun/Chapter10/Mtree.cpp)
+add_executable(YinRenKun_10_Btree YinRenKun/Chapter10/Btree.cpp YinRenKun/Chapter10/Mtree.cpp)
 
 add_executable(typed_printf typed_printf_copy.cpp)
 

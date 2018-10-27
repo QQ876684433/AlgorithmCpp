@@ -4,11 +4,12 @@
 
 #include <iostream>
 #include <stack>
+#include "BST.cpp"
 
 using namespace std;
 
 template<class E, class K>
-struct AVLNode {
+struct AVLNode /**: public BSTNode<E, K>*/ {
     int bf;
     E data;
     AVLNode<E, K> *left, *right;
@@ -20,7 +21,7 @@ struct AVLNode {
 };
 
 template<class E, class K>
-class AVLTree {
+class AVLTree : public BST<E, K> {
 public:
     AVLTree() : root(NULL) {}
 
