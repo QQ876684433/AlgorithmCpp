@@ -27,7 +27,7 @@ public:
 
     AVLTree(K Ref) : RefValue(Ref), root(NULL) {}
 
-    bool Insert(E &el) { return Insert(el, root); }
+    bool Insert(E &el) { return Insert(root,el); }
 
     bool Remove(K x, E &el) { return Remove(root, x, el); }
 
@@ -211,4 +211,24 @@ void AVLTree<E, K>::Traverse(AVLNode<E, K> *ptr, ostream &out) const {
         out << ptr->data;
         Traverse(ptr->right, out);
     }
+}
+
+struct node {
+    int data;
+    int operator==(node R){ return data==R.data;}
+    int operator>=(node R){ return data>=R.data;}
+    int operator<=(node R){ return data<=R.data;}
+    int operator<(node R){ return data<R.data;}
+    int operator>(node R){ return data>R.data;}
+};
+
+int main() {
+    AVLTree<node, int> tree;
+    node n;
+    int nodes[] = {16, 3, 7, 11, 9, 28, 18, 14, 15};
+    for (int i = 0; i < 9; ++i) {
+        n.data = nodes[i];
+        tree.Insert(n);
+    }
+    return 0;
 }
