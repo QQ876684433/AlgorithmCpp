@@ -112,7 +112,7 @@ add_executable(YinRenKun_5_HuffmanTree YinRenKun/Chapter5/HuffmanTree.cpp)
 add_executable(YinRenKun_7_BST YinRenKun/Chapter7/BST.cpp)
 add_executable(YinRenKun_7_AVLTree YinRenKun/Chapter7/AVLTree.cpp YinRenKun/Chapter7/BST.cpp)
 add_executable(YinRenKun_8_Graph YinRenKun/Chapter8/Graph.cpp)
-add_executable(YinRenKun_8_GraphMtx YinRenKun/Chapter8/GraphMtx.cpp YinRenKun/Chapter8/Graph.cpp)
+add_executable(YinRenKun_8_GraphMtx YinRenKun/Chapter8/GraphMtx.cpp)
 add_executable(YinRenKun_10_Mtree YinRenKun/Chapter10/Mtree.cpp)
 add_executable(YinRenKun_10_Btree YinRenKun/Chapter10/Btree.cpp YinRenKun/Chapter10/Mtree.cpp)
 
