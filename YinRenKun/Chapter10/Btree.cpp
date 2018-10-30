@@ -17,3 +17,8 @@ public:
 
     bool Remove(T &x);
 };
+
+template<class T>
+bool Btree<T>::Insert(const T &x) {
+    return false;
+}
