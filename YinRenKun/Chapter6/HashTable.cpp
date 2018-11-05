@@ -14,18 +14,27 @@ enum KindOfStatus {
 template<class E, class K>
 class HashTable {
 private:
+    /**
+     * @param CurrentSize 当前散列表中元素个数
+     */
     int divitor;
     int CurrentSize, TableSize;
     E *ht;
     KindOfStatus *info;
 
-    int FindPos(const K k1);
+    int FindPos(K k1);
 
     int operator==(E &el) { return *this == el; }
 
     int operator!=(E &el) { return *this != el; }
 
 public:
+    /**
+     * 构造函数
+     *
+     * @param d 散列函数的除数
+     * @param sz 散列表的大小
+     */
     HashTable(const int d, int sz = DefaultSize);
 
     ~HashTable() {
@@ -39,7 +48,98 @@ public:
 
     bool Insert(const E &e1);
 
+    /**
+     * 删除表中的kl，并将其值存到el中
+     *
+     * @param k1
+     * @param el
+     * @return
+     */
     bool Remove(const K k1, E &el);
 
     void makeEmpty();
 };
+
+template<class E, class K>
+HashTable<E, K>::HashTable(const int d, int sz) {
+    divitor = d;
+    TableSize = sz;
+
+    CurrentSize = 0;
+    ht = new E[TableSize];
+    info = new KindOfStatus[TableSize];
+    //表置空
+    for (int i = 0; i < TableSize; ++i) info[i] = Empty;
+}
+
+template<class E, class K>
+int HashTable<E, K>::FindPos(const K k1) {
+    int i = k1 % divitor;
+    int j = i;
+    do {
+        if (info[j] == Empty || (info[j] == Active && ht[j] == k1))return j;
+        j = (i + 1) % TableSize;
+    } while (j != i);
+    return j;
+}
+
+template<class E, class K>
+bool HashTable<E, K>::Search(const K k1, E &el) {
+    int i = FindPos(k1);
+    if (info[i] != Active || ht[i] != k1)return false;
+    el = ht[i];
+    return true;
+}
+
+template<class E, class K>
+void HashTable<E, K>::makeEmpty() {
+    for (int i = 0; i < TableSize; ++i) info[i] = Empty;
+    CurrentSize = 0;
+}
+
+template<class E, class K>
+HashTable<E, K> &HashTable<E, K>::operator=(const HashTable<E, K> &ht2) {
+    if (this != &ht2) {
+        //prevent the copy of itself
+        delete (info);
+        delete (ht);
+        TableSize = ht2.TableSize;
+        info = new KindOfStatus[ht2.TableSize];
+        ht = new E[ht2.TableSize];
+        for (int i = 0; i < TableSize; ++i) {
+            ht[i] = ht2.ht[i];
+            info[i] = ht2.info[i];
+        }
+        CurrentSize = ht2.CurrentSize;
+    }
+    return *this;
+}
+
+template<class E, class K>
+bool HashTable<E, K>::Insert(const E &el) {
+    K kl = el;
+    int i = FindPos(kl);
+    if (info[i] != Active) {
+        info[i] = Active;
+        ht[i] = el;
+        CurrentSize++;
+        return true;
+    }
+    if (info[i] == Active && ht[i] == el) {
+        cout << "The element " << el << " has already been contained in the hash table." << endl;
+        return false;
+    }
+    cout << "The hash table is full." << endl;
+    return false;
+}
+
+template<class E, class K>
+bool HashTable<E, K>::Remove(const K k1, E &el) {
+    int i = FindPos(k1);
+    if (info[i] == Active && ht[i] == k1) {
+        info[i] = Deleted;
+        CurrentSize--;
+        return true;
+    }
+    return false;
+}
