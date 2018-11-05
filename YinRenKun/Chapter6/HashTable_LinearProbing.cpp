@@ -12,10 +12,10 @@ enum KindOfStatus {
 };
 
 template<class E, class K>
-class HashTable {
+class HashTable_LinearProbing {
 private:
     /**
-     * @param CurrentSize 当前散列表中元素个数
+     * @param CurrentSize 当前散列表1342014中元素个数
      */
     int divitor;
     int CurrentSize, TableSize;
@@ -35,14 +35,14 @@ public:
      * @param d 散列函数的除数
      * @param sz 散列表的大小
      */
-    HashTable(const int d, int sz = DefaultSize);
+    HashTable_LinearProbing(const int d, int sz = DefaultSize);
 
-    ~HashTable() {
+    ~HashTable_LinearProbing() {
         delete (ht);
         delete (info);
     }
 
-    HashTable<E, K> &operator=(const HashTable<E, K> &ht2);
+    HashTable_LinearProbing<E, K> &operator=(const HashTable_LinearProbing<E, K> &ht2);
 
     bool Search(const K k1, E &el);
 
@@ -61,7 +61,7 @@ public:
 };
 
 template<class E, class K>
-HashTable<E, K>::HashTable(const int d, int sz) {
+HashTable_LinearProbing<E, K>::HashTable_LinearProbing(const int d, int sz) {
     divitor = d;
     TableSize = sz;
 
@@ -73,7 +73,7 @@ HashTable<E, K>::HashTable(const int d, int sz) {
 }
 
 template<class E, class K>
-int HashTable<E, K>::FindPos(const K k1) {
+int HashTable_LinearProbing<E, K>::FindPos(const K k1) {
     int i = k1 % divitor;
     int j = i;
     do {
@@ -84,7 +84,7 @@ int HashTable<E, K>::FindPos(const K k1) {
 }
 
 template<class E, class K>
-bool HashTable<E, K>::Search(const K k1, E &el) {
+bool HashTable_LinearProbing<E, K>::Search(const K k1, E &el) {
     int i = FindPos(k1);
     if (info[i] != Active || ht[i] != k1)return false;
     el = ht[i];
@@ -92,13 +92,13 @@ bool HashTable<E, K>::Search(const K k1, E &el) {
 }
 
 template<class E, class K>
-void HashTable<E, K>::makeEmpty() {
+void HashTable_LinearProbing<E, K>::makeEmpty() {
     for (int i = 0; i < TableSize; ++i) info[i] = Empty;
     CurrentSize = 0;
 }
 
 template<class E, class K>
-HashTable<E, K> &HashTable<E, K>::operator=(const HashTable<E, K> &ht2) {
+HashTable_LinearProbing<E, K> &HashTable_LinearProbing<E, K>::operator=(const HashTable_LinearProbing<E, K> &ht2) {
     if (this != &ht2) {
         //prevent the copy of itself
         delete (info);
@@ -116,7 +116,7 @@ HashTable<E, K> &HashTable<E, K>::operator=(const HashTable<E, K> &ht2) {
 }
 
 template<class E, class K>
-bool HashTable<E, K>::Insert(const E &el) {
+bool HashTable_LinearProbing<E, K>::Insert(const E &el) {
     K kl = el;
     int i = FindPos(kl);
     if (info[i] != Active) {
@@ -134,7 +134,7 @@ bool HashTable<E, K>::Insert(const E &el) {
 }
 
 template<class E, class K>
-bool HashTable<E, K>::Remove(const K k1, E &el) {
+bool HashTable_LinearProbing<E, K>::Remove(const K k1, E &el) {
     int i = FindPos(k1);
     if (info[i] == Active && ht[i] == k1) {
         info[i] = Deleted;
