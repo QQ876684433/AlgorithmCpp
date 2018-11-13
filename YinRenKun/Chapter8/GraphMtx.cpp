@@ -2,7 +2,9 @@
 // Created by steve on 18-10-30.
 //
 #include <iostream>
+#include <cstring>
 #include "Graph.cpp"
+#include <queue>
 
 using namespace std;
 
@@ -44,6 +46,14 @@ public:
     bool removeVertex(int v);
 
     bool removeEdge(int v1, int v2);
+
+    void DFS(GraphMtx<T, E> &G, const T &v);
+
+    void DFS(GraphMtx<T, E> &G, int v, bool visited[]);
+
+    void BFS(GraphMtx<T, E> &G, const T &v);
+
+    void Components(GraphMtx<T, E> &G);
 };
 
 template<class T, class E>
@@ -161,5 +171,63 @@ ostream &operator<<(ostream &out, GraphMtx<T, E> &G) {
             }
         }
     return out;
+}
+
+template<class T, class E>
+void GraphMtx<T, E>::DFS(GraphMtx<T, E> &G, const T &v) {
+    int loc, n = G.NumberOfVertices();
+    bool *visited = new bool[n];
+    memset(visited, false, sizeof(visited));
+    loc = G.getVertexPos(v);
+    DFS(G, loc, visited);
+    delete[] (visited);
+}
+
+template<class T, class E>
+void GraphMtx<T, E>::DFS(GraphMtx<T, E> &G, int v, bool *visited) {
+    cout << G.getValue(v) << " ";
+    visited[v] = true;
+    int w = G.GetFirstNeighbor(v);
+    while (w != -1) {
+        if (!visited[w])DFS(G, w, visited);
+        w = G.GetNextNeighbor(v, w);
+    }
+}
+
+template<class T, class E>
+void GraphMtx<T, E>::BFS(GraphMtx<T, E> &G, const T &v) {
+    int loc, n = G.NumberOfVertices();
+    bool *visited = new bool[n];
+    memset(visited, false, sizeof(visited));
+    queue<int> q;
+    loc = G.getVertexPos(v);
+    q.push(loc);
+    while (!q.empty()) {
+        loc = q.front();
+        q.pop();
+        if (!visited[loc]) {
+            cout << G.getValue(loc) << " ";
+            visited[loc] = true;
+        }
+        int w = G.GetFirstNeighbor(loc);
+        while (w != -1) {
+            q.push(w);
+            w = G.GetNextNeighbor(loc, w);
+        }
+    }
+    delete[]visited;
+}
+
+template<class T, class E>
+void GraphMtx<T, E>::Components(GraphMtx<T, E> &G) {
+    int n = G.NumberOfVertices();
+    bool *visited = new bool[n];
+    memset(visited, false, sizeof(visited));
+    for (int i = 0; i < n; ++i)
+        if (!visited[i]) {
+            DFS(G, i, visited);
+            // output the components
+        }
+    delete[]visited;
 };
 
