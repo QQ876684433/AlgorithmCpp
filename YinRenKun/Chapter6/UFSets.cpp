@@ -25,6 +25,8 @@ public:
 
     void WeightedUnion(int root1, int root2);
 
+    int CollapsingFind(int i);
+
 private:
     int *parent;
     int size;
@@ -50,4 +52,31 @@ int UFSets::Find_Recursive(int x) {
     if (parent[x] < 0)return x;
     else return Find(parent[x]);
 }
+
+void UFSets::WeightedUnion(int root1, int root2) {
+    int r1 = Find(root1), r2 = Find(root2), temp;
+    if (r1 != r2) {
+        temp = r1 + r2;
+        if (parent[r1] < parent[r2]) {
+            parent[r1] = r2;
+            parent[r2] = temp;
+        } else {
+            parent[r2] = r1;
+            parent[r1] = temp;
+        }
+    }
+}
+
+int UFSets::CollapsingFind(int i) {
+    int j;
+    for (j = i; j >= 0; j = parent[j]);
+    while (i != j) {
+        int temp = parent[i];
+        parent[i] = j;
+        i = temp;
+    }
+    return j;
+}
+
+
 
