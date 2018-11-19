@@ -5,6 +5,9 @@
 #include <cstring>
 #include "Graph.cpp"
 #include <queue>
+#include "MinSpanTree.cpp"
+#include "../Chapter5/MinHeap.cpp"
+#include "../Chapter6/UFSets.cpp"
 
 using namespace std;
 
@@ -54,6 +57,7 @@ public:
     void BFS(GraphMtx<T, E> &G, const T &v);
 
     void Components(GraphMtx<T, E> &G);
+
 };
 
 template<class T, class E>
@@ -231,3 +235,7 @@ void GraphMtx<T, E>::Components(GraphMtx<T, E> &G) {
     delete[]visited;
 };
 
+template<class T, class E>
+void Kruskal(GraphMtx<T, E> &G, MinSpanTree<T, E> &MST) {
+
+}
