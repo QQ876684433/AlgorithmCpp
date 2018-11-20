@@ -9,7 +9,7 @@
 using namespace std;
 
 template<typename E>
-class MinHeap{
+class MinHeap {
 public:
     MinHeap(int sz = DefaultSize);
 
@@ -26,6 +26,8 @@ public:
     bool IsFull() const { return currentSize == maxHeapSize; }
 
     void MakeEmpty() { currentSize = 0; }
+
+    void printHeap();
 
 private:
     E *heap;
@@ -121,4 +123,19 @@ bool MinHeap<E>::RemoveMin(E &x) {
     heap[0] = heap[--currentSize];
     siftDown(0, currentSize - 1);
     return true;
+}
+
+template<typename E>
+void MinHeap<E>::printHeap() {
+    for (int i = 0; i < currentSize; ++i) {
+        cout << heap[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int arr[] = {142, 543, 123, 65, 453, 879, 572, 434, 111, 242, 811, 102};
+    MinHeap<int> minHeap(arr, 12);
+    minHeap.printHeap();
+    return 0;
 }
