@@ -19,6 +19,8 @@ class GraphMtx : public Graph<T, E> {
 
     friend void Prim(GraphMtx<T, E> &G, const T u0, MinSpanTree<T, E> &MST);
 
+    friend void Dijkstra(GraphMtx<T, E> &G, T v, E dist[], int path[]);
+
 private:
     T *VerticesList;
     E **Edge;
@@ -292,7 +294,7 @@ void Prim(GraphMtx<T, E> &G, const T u0, MinSpanTree<T, E> &MST) {
                 ed.key = G.getWeight(u, v);
                 H.Insert(ed);
             }
-            v=G.GetNextNeighbor(u,v);
+            v = G.GetNextNeighbor(u, v);
         }
         while (!H.IsEmpty() && count < n) {
             H.RemoveMin(ed);
@@ -305,4 +307,56 @@ void Prim(GraphMtx<T, E> &G, const T u0, MinSpanTree<T, E> &MST) {
             }
         }
     } while (count < n);
+}
+
+/**
+ * 非负权值最短路径算法
+ *
+ * @tparam T
+ * @tparam E
+ * @param G
+ * @param v 源点
+ * @param dist 用来存放源点到各点的最短距离
+ * @param path 存放最短路径
+ */
+template<class T, class E>
+void Dijkstra(GraphMtx<T, E> &G, T v, E *dist, int *path) {
+    int n = G.NumberOfVertices();
+    bool *S = new bool[n];// 用来标记顶点是否包含在最短路径中
+    for (int i = 0; i < n; ++i) {
+        //遍历所有点，用来初始化辅助数组
+        dist[i] = G.getWeight(i, v);
+        S[i] = false;
+        //dist[i] < MaxValue 说明i点与源点v有边
+        if (i != v && dist[i] < MaxValue)path[i] = v;
+        else path[i] = -1;
+    }
+    S[v] = true;//将v点加入最短路径顶点集合中
+    dist[v] = 0;
+    E min;
+    //寻找不在S中的有最短路径的顶点u
+    for (int i = 0; i < n - 1; ++i) {
+        min = MaxValue;//最小权值
+        int u = v;
+        for (int j = 0; j < n; ++j)
+            if (!S[j]//不在S中
+                && dist[j] < min//最短路径比min还小，则dist[j]成为最小权值
+                    ) {
+                u = j;
+                min = dist[j];
+            }
+        //将不在S中的具有最短路径的顶点u加入S中
+        S[u] = true;
+        //更新各点到源点的最短路径值
+        for (int k = 0; k < n; ++k) {
+            E w = G.getWeight(k, u);
+            if (!S[k] //不在S中
+                && w < MaxValue //顶点k与已找出的最短路径顶点有边
+                && dist[u] + w < dist[k]) {
+                dist[k] = dist[u] + w;
+                //将到k的最短路径的顶点设为u，即源点到k的最短路径为(S,u,k)
+                path[k] = u;
+            }
+        }
+    }
 }
