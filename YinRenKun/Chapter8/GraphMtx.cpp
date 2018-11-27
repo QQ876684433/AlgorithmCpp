@@ -17,6 +17,8 @@ class GraphMtx : public Graph<T, E> {
 
     friend istream &operator>>(istream &in, GraphMtx<T, E> &G);
 
+    friend void Prim(GraphMtx<T, E> &G, const T u0, MinSpanTree<T, E> &MST);
+
 private:
     T *VerticesList;
     E **Edge;
@@ -237,5 +239,70 @@ void GraphMtx<T, E>::Components(GraphMtx<T, E> &G) {
 
 template<class T, class E>
 void Kruskal(GraphMtx<T, E> &G, MinSpanTree<T, E> &MST) {
+    MSTEdgeNode<T, E> ed;
+    int u, v, count;
+    int n = G.NumberOfVertices();
+    int m = G.NumberOfEdges();
+    MinHeap<MSTEdgeNode<T, E>> H(m);
+    UFSets F(n);
+    for (u = 0; u < n; ++u) {
+        for (v = 0; v < m; ++v) {
+            int w = G.getWeight(u, v);
+            if (w != MaxValue) {
+                ed.tail = u;
+                ed.head = v;
+                ed.key = w;
+                H.Insert(ed);
+            }
+        }
+    }
+    count = 1;
+    while (count < n) {
+        H.RemoveMin(ed);
+        u = F.Find(ed.tail);
+        v = F.Find(ed.head);
+        if (u != v) {
+            F.Union(u, v);
+            MST.Insert(ed);
+            count++;
+        }
+    }
+}
 
+template<class T, class E>
+void Prim(GraphMtx<T, E> &G, const T u0, MinSpanTree<T, E> &MST) {
+    MSTEdgeNode<T, E> ed;
+    int i, u, v, count;
+    int n = G.NumberOfVertices();
+    int m = G.NumberOfEdges();
+    u = G.getVertexPos(u0);
+    MinHeap<MSTEdgeNode<T, E>> H(m);
+    bool *Vmst = new bool[n];
+    for (int j = 0; j < n; ++j) {
+        Vmst[j] = false;
+    }
+    Vmst[n] = true;
+    count = 1;
+    do {
+        v = G.GetFirstNeighbor(u);
+        while (v != -1) {
+            if (!Vmst[v]) {
+                ed.tail = u;
+                ed.head = v;
+                ed.key = G.getWeight(u, v);
+                H.Insert(ed);
+            }
+            v=G.GetNextNeighbor(u,v);
+        }
+        while (!H.IsEmpty() && count < n) {
+            H.RemoveMin(ed);
+            if (!Vmst[ed.head]) {
+                MST.Insert(ed);
+                u = ed.head;
+                Vmst[u] = true;
+                count++;
+                break;
+            }
+        }
+    } while (count < n);
 }

@@ -122,6 +122,7 @@ add_executable(YinRenKun_9_BinaryInsertSort YinRenKun/Chapter9/dataList.h YinRen
 add_executable(YinRenKun_9_ShellSort YinRenKun/Chapter9/dataList.h YinRenKun/Chapter9/ShellSort.cpp)
 add_executable(YinRenKun_9_SelectSort YinRenKun/Chapter9/dataList.h YinRenKun/Chapter9/SelectSort.cpp)
 add_executable(YinRenKun_9_MergeSort YinRenKun/Chapter9/dataList.h YinRenKun/Chapter9/MergeSort.cpp)
+add_executable(YinRenKun_9_HeapSort YinRenKun/Chapter9/maxheap.h YinRenKun/Chapter9/HeapSort.cpp)
 add_executable(YinRenKun_10_Mtree YinRenKun/Chapter10/Mtree.cpp)
 add_executable(YinRenKun_10_Btree YinRenKun/Chapter10/Btree.cpp YinRenKun/Chapter10/Mtree.cpp)
 
