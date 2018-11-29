@@ -359,4 +359,26 @@ void Dijkstra(GraphMtx<T, E> &G, T v, E *dist, int *path) {
             }
         }
     }
+
+    printShortestPath(G, v, dist, path);
+}
+
+template<class T, class E>
+void printShortestPath(GraphMtx<T, E> &G, int v, E dist[], const int path[]) {
+    cout << "从顶点" << G.getValue(v) << "到其他各顶点的最短路径为：" << endl;
+    int n = G.NumberOfVertices();
+    int *d = new int[n];
+    for (int i = 0; i < n; ++i) {
+        if (i != v) {
+            int j = i;
+            int k = 0;
+            while (j != v) {
+                d[k++] = j;
+                j = path[j];
+            }
+            cout << "顶点" << G.getValue(i) << "的最短路径为：" << G.getValue(v);
+            while (k) { cout << G.getValue(d[--k]) << " "; }
+            cout << "最短路径长度为：" << dist[i] << endl;
+        }
+    }
 }
