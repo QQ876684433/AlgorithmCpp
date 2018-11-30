@@ -355,7 +355,7 @@ void Dijkstra(GraphMtx<T, E> &G, T v, E *dist, int *path) {
         S[u] = true;
         //更新各点到源点的最短路径值
         for (int k = 0; k < n; ++k) {
-            E w = G.getWeight(k, u);
+            E w = G.getWeight(u, k);
             if (!S[k] //不在S中
                 && w < MaxValue //顶点k与已找出的最短路径顶点有边
                 && dist[u] + w < dist[k]) {
