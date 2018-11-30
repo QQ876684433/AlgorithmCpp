@@ -397,7 +397,7 @@ void Bellman_Ford(GraphMtx<T, E> &G, int v, E *dist, int *path) {
 }
 
 template<class T, class E>
-void Floyd(GraphMtx<T, E> &G, E (*a)[], int (*path)[]) {
+void Floyd(GraphMtx<T, E> &G, E (*a)[], int **path) {
     int n = G.NumberOfVertices();
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
