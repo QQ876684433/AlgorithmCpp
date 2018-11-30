@@ -17,9 +17,15 @@ class GraphMtx : public Graph<T, E> {
 
     friend istream &operator>>(istream &in, GraphMtx<T, E> &G);
 
+    friend void Kruskal(GraphMtx<T, E> &G, MinSpanTree<T, E> &MST);
+
     friend void Prim(GraphMtx<T, E> &G, const T u0, MinSpanTree<T, E> &MST);
 
     friend void Dijkstra(GraphMtx<T, E> &G, T v, E dist[], int path[]);
+
+    friend void Bellman_Ford(GraphMtx<T, E> &G, int v, E dist[], int path[]);
+
+    friend void Floyd(GraphMtx<T, E> &G, E a[][], int path[][]);
 
 private:
     T *VerticesList;
@@ -361,6 +367,56 @@ void Dijkstra(GraphMtx<T, E> &G, T v, E *dist, int *path) {
     }
 
     printShortestPath(G, v, dist, path);
+}
+
+template<class T, class E>
+void Bellman_Ford(GraphMtx<T, E> &G, int v, E *dist, int *path) {
+    int n = G.NumberOfVertices();
+    for (int i = 0; i < n; ++i) {
+        dist[i] = G.getWeight(v, i);
+        if (i != v && dist[i] < MaxValue) path[i] = v;
+        else path[i] = -1;
+    }
+
+    //初始化时已经计算了k=1的情况，接下来就是计算2<=k<=n-1的情况
+    for (int k = 2; k < n; ++k) {
+        //遍历各个除了起点v的所有顶点
+        for (int u = 0; u < n; ++u) {
+            if (u != v)//除了顶点v
+                for (int i = 0; i < n; ++i) {
+                    //此时u为要计算最短距离的点，i是从v->i->u的中间顶点，要判断该路径是否比上一轮计算的v->u更短
+                    E w = G.getWeight(i, u);//i->u的距离
+                    //w>0是指？
+                    if (w > 0 && w < MaxValue && dist[u] > dist[i] + w) {
+                        dist[u] = dist[i] + w;
+                        path[u] = i;
+                    }
+                }
+        }
+    }
+}
+
+template<class T, class E>
+void Floyd(GraphMtx<T, E> &G, E (*a)[], int (*path)[]) {
+    int n = G.NumberOfVertices();
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            a[i][j] = G.getWeight(i, j);
+            if (i != j && a[i][j] < MaxValue)path[i][j] = i;
+            else path[i][j] = 0;
+        }
+    }
+
+    for (int k = 0; k < n; ++k) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (a[i][k] + a[k][j] < a[i][j]) {
+                    a[i][j] = a[i][k] + a[k][j];
+                    path[i][j] = k;
+                }
+            }
+        }
+    }
 }
 
 template<class T, class E>
